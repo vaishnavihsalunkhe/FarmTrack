@@ -43,8 +43,9 @@ const KEY='farmtrack_v1';
 let db=JSON.parse(localStorage.getItem(KEY)||'{"profile":{},"crops":[],"events":[],"expenses":[],"notes":[],"schemes":[],"prices":[]}');
 let diaryQuery='',diaryType='All';
 function ensureData(){db.profile=db.profile||{};db.crops=db.crops||[];db.events=db.events||[];db.expenses=db.expenses||[];db.notes=db.notes||[];db.schemes=db.schemes||[];db.prices=db.prices||[];db.crops.forEach((x,i)=>x.id=x.id||('crop-'+Date.now()+'-'+i));db.events.forEach((x,i)=>x.id=x.id||('event-'+Date.now()+'-'+i));db.expenses.forEach((x,i)=>x.id=x.id||('exp-'+Date.now()+'-'+i));}
-ensureData();save();
+ensureData();
 function save(){localStorage.setItem(KEY,JSON.stringify(db));}
+save();
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});}
 function total(){return db.expenses.reduce((a,x)=>a+Number(x.amount||0),0)}
