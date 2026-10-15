@@ -16,3 +16,17 @@ jobs:
           node-version: '22'
       - name: Run financial and startup regression tests
         run: node --test tests/*.test.cjs
+      - name: Upload isolated staging candidate
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: farmtrack-staging-candidate
+          path: |
+            index.html
+            sw.js
+            reset.html
+            manifest.json
+            icon.svg
+            icons/
+          if-no-files-found: warn
+          retention-days: 14
